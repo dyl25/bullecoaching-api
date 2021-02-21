@@ -22,7 +22,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::middleware('auth:api')->group(function () {
     Route::get('/exercises', [ExerciseController::class, 'index']);
-
+    Route::get('tags' , [TagController::class, 'index']);
+    Route::get('/difficulties', [DifficultyController::class, 'index']);
 });
 
 Route::post('/login', [AuthController::class, 'login']);
