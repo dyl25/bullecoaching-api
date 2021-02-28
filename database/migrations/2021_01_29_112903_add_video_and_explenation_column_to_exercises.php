@@ -15,11 +15,11 @@ class AddVideoAndExplenationColumnToExercises extends Migration
     {
         Schema::table('exercises', function (Blueprint $table) {
             $table->integer('begin_image_id')->unsigned()->nullable();
-            $table->foreign('begin_image_id')->references('id')->on('images')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('begin_image_id')->references('id')->on('medias')->onUpdate('cascade')->onDelete('cascade');
             $table->integer('end_image_id')->unsigned()->nullable();
-            $table->foreign('end_image_id')->references('id')->on('images')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('end_image_id')->references('id')->on('medias')->onUpdate('cascade')->onDelete('cascade');
             $table->integer('video_id')->unsigned()->nullable();
-            $table->foreign('video_id')->references('id')->on('videos')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('video_id')->references('id')->on('medias')->onUpdate('cascade')->onDelete('cascade');
             $table->text('explenation')->nullable();
             $table->string('display_mode', 10)->nullable()->change();
         });

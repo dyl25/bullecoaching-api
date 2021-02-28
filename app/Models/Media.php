@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Media extends Model
 {
+    protected $table = 'medias';
     protected $guarded = [];
     protected $appends = ['storagePath'];
 

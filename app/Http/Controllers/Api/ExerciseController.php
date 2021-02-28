@@ -117,6 +117,8 @@ class ExerciseController extends Controller
 
         }
 
+        $exercise->save();
+
         return $exercise;
     }
 }
