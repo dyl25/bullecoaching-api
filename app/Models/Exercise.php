@@ -20,8 +20,8 @@ class Exercise extends Model
              * il faut obtenir des instances Eloquent afin de trigger l'event 
              * de suppression sur le model Content
              */
-            Content::where('exercise_id', $exercise->id)->get()->each(function ($content) {
-                $content->delete();
+            Media::where('exercise_id', $exercise->id)->get()->each(function ($media) {
+                $media->delete();
             });
         });
 
@@ -37,8 +37,22 @@ class Exercise extends Model
         return $this->belongsTo(Difficulty::class);
     }
 
-    public function contents() {
-        return $this->hasMany(Content::class);
+    public function medias() {
+        return $this->hasMany(Media::class);
+    }
+
+    public function beginImage()
+    {
+        return $this->hasOne(Media::class, 'begin_image_id');
+    }
+
+    public function endImage()
+    {
+        return $this->hasOne(Media::class, 'end_image_id');
+    }
+
+    public function video() {
+        return $this->hasOne(Media::class);
     }
 
     public function author() {

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreExerciseAdmin;
 use App\Models\Exercise;
 use App\Models\Image as ExerciseImage;
+use App\Models\Media;
 use App\Models\Tag;
 use App\Models\Video;
 use Illuminate\Http\Request;
@@ -58,9 +59,13 @@ class ExerciseController extends Controller
                 $filename
             );
 
-            Video::create([
-                'filename' => $filename
+            $video = Media::create([
+                'type' => 'video',
+                'filename' => $filename,
             ]);
+
+            $exercise->video_id = $video->id;
+
         }
 
         if ($request->beginingImage) {
@@ -78,9 +83,12 @@ class ExerciseController extends Controller
                 $constraint->aspectRatio();
             })->save($path);
 
-            ExerciseImage::create([
+            $beginImage = Media::create([
+                'type' => 'image',
                 'filename' => $filename,
             ]);
+
+            $exercise->begin_image_id = $beginImage->id;
         }
 
         if ($request->endingImage) {
@@ -100,9 +108,13 @@ class ExerciseController extends Controller
                 $constraint->aspectRatio();
             })->save($path);
 
-            ExerciseImage::create([
+            $endImage = Media::create([
+                'type' => 'image',
                 'filename' => $filename,
             ]);
+
+            $exercise->end_image_id = $endImage->id;
+
         }
 
         return $exercise;
