@@ -11,6 +11,7 @@ use App\Models\Video;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Intervention\Image\Facades\Image;
 
 class ExerciseController extends Controller
 {
@@ -82,31 +83,26 @@ class ExerciseController extends Controller
             ]);
         }
 
-        if ($request->image2) {
-            foreach ($request->imageGroup as $key => $content) {
+        if ($request->endingImage) {
 
-                $uploadedFile = $request->imageGroup[$key]['file'];
-                $filename = time() . $uploadedFile->getClientOriginalName();
+            $uploadedFile = $request->endingImage;
+            $filename = time() . $uploadedFile->getClientOriginalName();
 
-                if (!Storage::disk('local')->exists('exercises/img')) {
-                    Storage::makeDirectory('exercises/img');
-                }
-
-                $path = storage_path('app/exercises/img/' . $filename);
-
-                //Image::make($uploadedFile)->heighten(400)->save($path);
-
-                Image::make($uploadedFile)->resize(597, 400, function ($constraint) {
-                    $constraint->aspectRatio();
-                })->save($path);
-
-                Content::create([
-                    'exercise_id' => $exercise->id,
-                    'type' => $contentType,
-                    'filename' => $filename,
-                    'explenation' => $request->imageGroup[$key]['description']
-                ]);
+            if (!Storage::disk('local')->exists('exercises/img')) {
+                Storage::makeDirectory('exercises/img');
             }
+
+            $path = storage_path('app/exercises/img/' . $filename);
+
+            //Image::make($uploadedFile)->heighten(400)->save($path);
+
+            Image::make($uploadedFile)->resize(597, 400, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($path);
+
+            ExerciseImage::create([
+                'filename' => $filename,
+            ]);
         }
 
         return $exercise;
