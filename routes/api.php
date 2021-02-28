@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Api\ExerciseController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DifficultyController;
+use App\Http\Controllers\TagController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,6 +24,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::middleware('auth:api')->group(function () {
     Route::get('/exercises', [ExerciseController::class, 'index']);
+    Route::post('/exercises', [ExerciseController::class, 'store']);
     Route::get('tags' , [TagController::class, 'index']);
     Route::get('/difficulties', [DifficultyController::class, 'index']);
 });
