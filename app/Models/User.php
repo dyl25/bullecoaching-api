@@ -46,7 +46,11 @@ class User extends Authenticatable implements JWTSubject
     protected $appends = [
         'fullname', 
         'age', 
-        'created_at_formated'
+        'created_at_formated',
+        'isAdmin',
+        'isCoach',
+        'isUser',
+        'hasPaid'
     ];
 
 
@@ -158,6 +162,25 @@ class User extends Authenticatable implements JWTSubject
     public function hasRole(string $role): bool
     {
         return $this->role->name === $role;
+    }
+
+    public function getIsAdminAttribute() {
+        return $this->role->name ===  'admin' || $this->role->name ===  'super-admin';
+    }
+
+    public function getIsCoachAttribute()
+    {
+        return $this->role->name ===  'coach';
+    }
+
+    public function getIsUserAttribute()
+    {
+        return $this->role->name ===  'user';
+    }
+
+    public function getHasPaidAttribute()
+    { 
+        return $this->has_paid;
     }
 
     //Get all the assigned exercises to a user
