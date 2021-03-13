@@ -26,9 +26,9 @@ class StoreExerciseAdmin extends FormRequest
         return [
             'userId' => 'bail|required|numeric|exists:users,id',
             'title' => 'bail|required||string|min:4|max:100',
-            'video' => 'bail|nullable|file|mimes:mp4,webm|max:40000',
-            'beginingImage' => 'bail|file|mimes:jpeg,jpg,png|max:1000',
-            'endingImage' => 'bail|file|mimes:jpeg,jpg,png|max:1000',
+            'video' => 'bail|sometimes|required|file|mimes:mp4,webm|max:40000',
+            'beginingImage' => 'bail|sometimes|required|file|mimes:jpeg,jpg,png|max:1000',
+            'endingImage' => 'bail|sometimes|required|file|mimes:jpeg,jpg,png|max:1000',
             'explenation' => 'bail|required|string|min:5',
             'difficulty' => 'bail|required|min:1|max:1|exists:difficulties,id',
             'tags' => 'nullable|array|max:5',

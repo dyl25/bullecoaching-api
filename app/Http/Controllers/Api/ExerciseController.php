@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreExerciseAdmin;
+use App\Jobs\ResizeImage;
 use App\Models\Exercise;
 use App\Models\Image as ExerciseImage;
 use App\Models\Media;
@@ -71,6 +72,7 @@ class ExerciseController extends Controller
         if ($request->beginingImage) {
 
             $uploadedFile = $request->beginingImage;
+
             $filename = time() . $uploadedFile->getClientOriginalName();
 
             if (!Storage::disk('local')->exists('exercises/img')) {
@@ -82,6 +84,8 @@ class ExerciseController extends Controller
             Image::make($uploadedFile)->resize(597, 400, function ($constraint) {
                 $constraint->aspectRatio();
             })->save($path);
+
+            //ResizeImage::dispatch($uploadedFile, $path);
 
             $beginImage = Media::create([
                 'type' => 'image',
@@ -101,8 +105,6 @@ class ExerciseController extends Controller
             }
 
             $path = storage_path('app/exercises/img/' . $filename);
-
-            //Image::make($uploadedFile)->heighten(400)->save($path);
 
             Image::make($uploadedFile)->resize(597, 400, function ($constraint) {
                 $constraint->aspectRatio();
