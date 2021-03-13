@@ -50,7 +50,8 @@ class User extends Authenticatable implements JWTSubject
         'isAdmin',
         'isCoach',
         'isUser',
-        'hasPaid'
+        'hasPaid',
+        'isExclude'
     ];
 
 
@@ -181,6 +182,10 @@ class User extends Authenticatable implements JWTSubject
     public function getHasPaidAttribute()
     { 
         return $this->has_paid;
+    }
+
+    public function getIsExcludeAttribute() {
+        return !$this->exclude;
     }
 
     //Get all the assigned exercises to a user
