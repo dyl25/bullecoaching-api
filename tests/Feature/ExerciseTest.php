@@ -31,6 +31,7 @@ class ExerciseTest extends TestCase
 
     /**
      * Coach can not view exercises from other coach
+     * 
      * @return void
      */
     public function test_coach_can_not_view_exercises_from_other() {
