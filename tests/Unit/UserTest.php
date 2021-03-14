@@ -67,4 +67,5 @@ class UserTest extends TestCase
 
         $this->assertFalse($user->isCoach);
     }
+
 }

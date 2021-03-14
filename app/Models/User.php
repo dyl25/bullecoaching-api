@@ -41,6 +41,8 @@ class User extends Authenticatable implements JWTSubject
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'has_paid' => 'boolean',
+        'exclude' => 'boolean'
     ];
 
     protected $appends = [
@@ -50,8 +52,7 @@ class User extends Authenticatable implements JWTSubject
         'isAdmin',
         'isCoach',
         'isUser',
-        'hasPaid',
-        'isExclude'
+        //'isExclude'
     ];
 
 
@@ -179,14 +180,9 @@ class User extends Authenticatable implements JWTSubject
         return $this->role->name ===  'user';
     }
 
-    public function getHasPaidAttribute()
-    { 
-        return $this->has_paid;
-    }
-
-    public function getIsExcludeAttribute() {
+    /*public function getIsExcludeAttribute() {
         return !$this->exclude;
-    }
+    }*/
 
     //Get all the assigned exercises to a user
     public function assignedExercises()
