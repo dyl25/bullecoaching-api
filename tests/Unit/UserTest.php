@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Models\Gender;
 use App\Models\Role;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Models\User;
@@ -17,7 +18,7 @@ class UserTest extends TestCase
      *
      * @return void
      */
-    public function testUserIsCoachAttributeIsTrue()
+    public function test_user_is_coach_attribute()
     {
         $role = Role::factory()->create(['name' => 'coach']);
 
@@ -31,11 +32,15 @@ class UserTest extends TestCase
      *
      * @return void
      */
-    public function testUserIsCoachAttributeIsFalse()
+    public function test_user_is_not_coach_attribute()
     {
+        $gender = Gender::factory()->create();
         $role = Role::factory()->create(['name' => 'usr']);
 
-        $user = User::factory()->for($role)->make();
+        $user = User::factory()
+        ->for($role)
+        ->for($gender)
+        ->create();
 
         $this->assertFalse($user->isCoach);
     }
@@ -45,11 +50,15 @@ class UserTest extends TestCase
      *
      * @return void
      */
-    public function testUserIsUserAttributeIsTrue()
+    public function test_user_is_user_attribute()
     {
+        $gender = Gender::factory()->create();
         $role = Role::factory()->create(['name' => 'user']);
 
-        $user = User::factory()->for($role)->make();
+        $user = User::factory()
+        ->for($role)
+        ->for($gender)
+        ->make();
 
         $this->assertTrue($user->isUser);
     }
@@ -59,7 +68,7 @@ class UserTest extends TestCase
      *
      * @return void
      */
-    public function testUserIsUserAttributeIsFalse()
+    public function test_user_is_not_user_attribute()
     {
         $role = Role::factory()->create(['name' => 'adm']);
 
